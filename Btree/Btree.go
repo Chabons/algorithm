@@ -1,4 +1,4 @@
-package main
+package Btree
 
 import "fmt"
 
@@ -185,14 +185,14 @@ func (this *Btree) toString(node *Node, depth int, idx int) (NewIdx int) {
 	size := node.KeySize()
 	for i := 0; i < size; i++ {
 		if !node.Leaf {
-			idx = this.Str(node.Children[i], depth+1, idx)
+			idx = this.toString(node.Children[i], depth+1, idx)
 		}
 		addSpace(this.Desc[depth], idx)
 		*this.Desc[depth] += fmt.Sprintf("%04d ", node.Keys[i])
 	}
 	idx += size
 	if !node.Leaf && size > 0 {
-		idx = this.Str(node.Children[size], depth+1, idx)
+		idx = this.toString(node.Children[size], depth+1, idx)
 	}
 
 	return idx
@@ -209,24 +209,4 @@ func (this *Btree) String() string {
 	}
 	result += "----------------------------tree string end  ------------------------\n"
 	return result
-}
-
-func main() {
-	tree, err := NewBtree(2)
-	if err != nil {
-		panic(err)
-	}
-
-	tree.Insert(5)
-	tree.Insert(8)
-	tree.Insert(9)
-	tree.Insert(1)
-	fmt.Println(tree)
-	tree.Insert(3)
-	tree.Insert(4)
-	tree.Insert(10)
-	tree.Insert(11)
-	tree.Insert(12)
-	tree.Insert(13)
-	fmt.Println(tree)
 }
