@@ -10,6 +10,7 @@ public:
     LRUCache(uint32_t capacity) : m_capacity(capacity) {}
 
     int get(int key) {
+        if (m_capacity <= 0 || m_cache_map.empty()) return -1;
         auto it = m_cache_map.find(key);
         if (it == m_cache_map.end()) return -1;
 
